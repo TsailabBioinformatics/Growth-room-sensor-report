@@ -7,4 +7,4 @@ These Python applications are designed for Raspberry Pi management, facilitating
 
 ## Getting Started
 
-### Prerequisites
+### Prerequisites 
