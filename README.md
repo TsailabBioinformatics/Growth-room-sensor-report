@@ -26,10 +26,19 @@ These Python applications are designed for Raspberry Pi management, facilitating
 ### Installation
 
 #### Local Installation
-Clone the repository:
+Clone the repository TrackIPAddress and RPI3 or RPI0 (based on the RPI type):
 ```bash
-git clone https://github.com/your-lab/AGEseq
-cd AGEseq
+git clone githublink
+cd TrackIPAddress
+source venv/bin/activate
+python3 pip3 install -r requirement.txt
+python3 getIP.py
+
+cd RPI3
+source venv/bin/activate
+python3 pip3 install -r requirement.txt
+python3 app.py
+
 ```
 
 
