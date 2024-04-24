@@ -1,0 +1,12 @@
+{
+	"firebaseConfig": {
+		"apiKey": "AIzaSyAVSZIbJleD8ZO1fIKI4_SojjMacPwPBQk",
+		"authDomain": "rpi-dataset.firebaseapp.com",
+		"databaseURL": "https://rpi-dataset-default-rtdb.firebaseio.com",
+		"projectId": "rpi-dataset",
+		"storageBucket": "rpi-dataset.appspot.com",
+		"messagingSenderId": "594425974862",
+		"appId": "1:594425974862:web:0e9e13664722bd6b21731f",
+		"measurementId": "G-NPNVTFDDZ8"
+	}
+}
