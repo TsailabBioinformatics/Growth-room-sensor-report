@@ -1,6 +1,6 @@
 {
 	"firebaseConfig": {
-		"apiKey": "AIzaSyAVSZIbJleD8ZO1fIKI4_SojjMacPwPBQk",
+		"apiKey": "**************",
 		"authDomain": "rpi-dataset.firebaseapp.com",
 		"databaseURL": "https://rpi-dataset-default-rtdb.firebaseio.com",
 		"projectId": "rpi-dataset",
