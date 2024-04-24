@@ -138,3 +138,65 @@ WantedBy=multi-user.target
 `sudo systemctl start dailyreport.service` \
 `sudo systemctl status dailyreport.service` 
 
+
+
+# SensorsData
+Developed with Python's Flask package, this API is designed to capture data from RPIs and store it in a SQLite database. This data is then utilized by the 'Daily Reporting App' to present information on the website. Hosted on lab's webserver.
+
+
+## Getting Started
+
+#### Local Installation
+Clone the repository SensorsData on lab's webserver
+```bash
+git clone []
+cd SensorsData-App
+source venv/bin/activate
+python3 pip3 install -r requirement.txt
+```
+
+### Usage
+#### Command-Line Interface
+
+```
+pyhton3 app.py
+```
+#### Service file
+`sudo nano /lib/systemd/system/SensorsData.service` \
+`sudo chmod 644 /lib/systemd/system/SensorsData.service` \
+`sudo systemctl enable SensorsData.service` \
+`sudo systemctl daemon-reload` \
+`sudo systemctl start SensorsData.service` \
+`sudo systemctl status SensorsData.service` 
+
+
+# RPI0-API
+Constructed with Python's Flask package, this API is dedicated to storing data transmitted from RPI0 into a Firebase database. Due to the absence of Firebase package support in RPI0, this API serves as a workaround for data transmission. Hosted on lab's webserver.
+
+
+## Getting Started
+
+#### Local Installation
+Clone the repository RPI0-API on lab's webserver
+```bash
+git clone []
+cd RPI0-API
+source venv/bin/activate
+python3 pip3 install -r requirement.txt
+```
+
+### Usage
+#### Command-Line Interface
+
+```
+pyhton3 app.py
+```
+#### Service file
+`sudo nano /lib/systemd/system/rpi0.service` \
+`sudo chmod 644 /lib/systemd/system/rpi0.service` \
+`sudo systemctl enable rpi0.service` \
+`sudo systemctl daemon-reload` \
+`sudo systemctl start rpi0.service` \
+`sudo systemctl status rpi0.service` 
+
+
