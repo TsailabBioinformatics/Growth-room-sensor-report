@@ -3,7 +3,7 @@
 '''
 from picamera import PiCamera
 import pyrebase
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,time
 import os
 from humidity import *
 from userdefined import *
@@ -75,7 +75,7 @@ def storeOnWebserver(data):
     data_str = json.dumps(data)
     
     # Send the JSON string to the API endpoint
-    response = requests.post('http://aspendb.uga.edu/database/storedata', json=data_str)
+    response = requests.post('http://tsailab.gene.uga.edu/database/storedata', json=data_str)
 
 
     
@@ -86,8 +86,8 @@ def storeOnWebserver(data):
 def storeImage():
     try:
         #initialize firebase object
-        firebase = pyrebase.initialize_app(firebaseConfig)
-        storage = firebase.storage()
+        #firebase = pyrebase.initialize_app(firebaseConfig)
+        #storage = firebase.storage()
         #initialize camera object
         camera = PiCamera()
         #use now datetime as name of the Image
@@ -97,7 +97,7 @@ def storeImage():
         #capture image using the name
         camera.capture(name)
         #store image in the firebase
-        storage.child("{}/{}".format(storageBucket,name)).put(name)
+        #storage.child("{}/{}".format(storageBucket,name)).put(name)
         #send the image to brightness() to get the brightness value
         brightness_value = brightness(name)
         
@@ -144,7 +144,7 @@ def storeSensorReadings(docName,motion,encoded_string):
         data = getSensorReadings()
         logging.info("Temperature {}".format(data["Temperature"]))
         if data["Temperature"] < 18 or  data["Temperature"] > 30: 
-            sendStaus(rpidescription,location, raspberryIP(), data["Temperature"]) 
+            sendStaus(rpidescription,location, raspberryIP(), data["Temperature"], "temp") 
             
     #store all the data into a dictionary 
     data["Motion"] = motion   #Currently set to None
@@ -158,13 +158,19 @@ def storeSensorReadings(docName,motion,encoded_string):
     data["location"]= location
     
     
+    if configData["current_brightness"] > 10 and (int((datetime.now()).strftime("%H"))>=22 and int((datetime.now()).strftime("%M"))>0) and int((datetime.now()).strftime("%H"))<6:
+        sendStaus(rpidescription,location, raspberryIP(), "On", "light") 
+        
+    if configData["current_brightness"] < 2 and int((datetime.now()).strftime("%H"))>=6  and (int((datetime.now()).strftime("%H"))<22 and int((datetime.now()).strftime("%H"))<=59):
+        sendStaus(rpidescription,location, raspberryIP(), "Off", "light") 
+    
     try:
         #send this data to webserver to store it in into local database using storeOnWebserver()
         storeOnWebserver(data)
         
         #Store this data on firebase
-        doc_ref = db.collection(collectionName).document(docName)
-        doc_ref.set(data)
+        #doc_ref = db.collection(collectionName).document(docName)
+        #doc_ref.set(data)
         print("KPI stored")
         
     except Exception as err:
@@ -186,5 +192,6 @@ while True:
         time.sleep(1800)
     except Exception as err:
         logging.error('{}'.format(err))
+        time.sleep(1800)
         pass
 
