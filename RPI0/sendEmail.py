@@ -2,8 +2,8 @@ import smtplib
 from email.message import EmailMessage
 
 def sendStaus(rpidescription, location, IPAddress, value, flag):
-    email = "TsaiLab.status@gmail.com"
-    password = "pmildtcgqwdlqbau"
+    email = "labemail@gmail.com"
+    password = "**********"
     
     try:
         # starting the smtplib server 
@@ -26,7 +26,7 @@ def sendStaus(rpidescription, location, IPAddress, value, flag):
             msg['Subject'] = "({}-pi3-{})Abnormalities in Light".format(rpidescription,location)
         
         msg['From'] = email
-        msg['To'] = ["TsaiLab.status@gmail.com","ch29576@uga.edu","ss29714@uga.edu"]
+        msg['To'] = []
         
         # send email
         server.send_message(msg)
