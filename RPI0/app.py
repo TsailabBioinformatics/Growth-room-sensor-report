@@ -110,7 +110,7 @@ def storeSensorReadings(docName,motion,encoded_string):
     #get location of where the RPI is installed from the API
     location = ""
     try:
-        response = storeOnWebserver({"rpidescription":rpidescriptionLocation},'http://aspendb.uga.edu/rpi0/getlocation')
+        response = storeOnWebserver({"rpidescription":rpidescriptionLocation},'http://tsailab.gene.uga.edu/rpi0/getlocation')
         response = json.loads(response)
         location = response["location"]
     except:
@@ -122,7 +122,7 @@ def storeSensorReadings(docName,motion,encoded_string):
         data = getSensorReadings()
         logging.info("Temperature {}".format(data["Temperature"]))
         if data["Temperature"] < 18 or  data["Temperature"] > 30: 
-            sendStaus(rpidescriptionLocation,location, raspberryIP(), data["Temperature"]) 
+            sendStaus(rpidescriptionLocation,location, raspberryIP(), data["Temperature"], "temp") 
     
     #store all the data into a dictionary 
     data["Motion"] = motion   #Currently set to None
@@ -133,11 +133,17 @@ def storeSensorReadings(docName,motion,encoded_string):
     data["image"] = encoded_string
     data["location"]= location
     
+    '''if configData["current_brightness"] > 10 and (int((datetime.now()).strftime("%H"))>=0 and int((datetime.now()).strftime("%M"))>0) and int((datetime.now()).strftime("%H"))<6:
+        sendStaus(rpidescription,location, raspberryIP(), "On", "light") 
+        
+    if configData["current_brightness"] < 2 and int((datetime.now()).strftime("%H"))>=6  and (int((datetime.now()).strftime("%H"))<23 and int((datetime.now()).strftime("%H"))<59):
+        sendStaus(rpidescription,location, raspberryIP(), "Off", "light") '''
+    
     try:
         #send this data to webserver to store it in into local database using storeOnWebserver()
-        storeOnWebserver(data,'http://aspendb.uga.edu/database/storedata')
+        storeOnWebserver(data,'http://tsailab.gene.uga.edu/database/storedata')
         #send this data to webserver to store it in into firebase database using storeOnWebserver()
-        storeOnWebserver(data,'http://aspendb.uga.edu/rpi0/storedata')
+        #storeOnWebserver(data,'http://tsailab.gene.uga.edu/rpi0/storedata')
         print("KPI stored")
     except Exception as err:
         logging.error('storeSensorReadings: {}'.format(err))
@@ -148,6 +154,7 @@ motion = 0
 #Infinite loop to keep this app running
 while True:
     try:
+        print("here")
         #Call storeImage() to get imageRef and encoded Image
         docName,encoded_string = storeImage()
         #Call storeSensorReadings() to save all info into firebase and database
@@ -155,6 +162,7 @@ while True:
         time.sleep(1800)
     except Exception as err:
         logging.error('{}'.format(err))
+        time.sleep(1800)
         pass
     
 
