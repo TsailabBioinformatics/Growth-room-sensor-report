@@ -32,12 +32,10 @@ git clone https://github.com/TsailabBioinformatics/RaspberryPis.git
 cd TrackIPAddress
 source venv/bin/activate
 python3 pip3 install -r requirement.txt
-python3 getIP.py
 
 cd RPI3 or cd RPI0
 source venv/bin/activate
 python3 pip3 install -r requirement.txt
-python3 app.py
 
 ```
 
@@ -53,29 +51,28 @@ python3 app.py
 ```
 
 #### Service file
-For RPI3 or RPI0
+Can be done for RPI datacollector and tracking IP address 
 `sudo nano /lib/systemd/system/datacollector.service` \
 Paste below lines inside the file by making necessary changes 
 
 ```
-[Unit] 
-Description=rpi3 
-After=multi-user.target 
+  [Unit] 
+  Description=rpi3 
+  After=multi-user.target 
 
+  [Service] 
+  WorkingDirectory=/path_to_user_directory 
+  User=sonya-cummings 
+  Type=idle 
+  ExecStart=/path_to_user_directory/DataCollector/venv/bin/python3 /path_to_user_directory/DataCollector/app.py 
+  Restart=on-failure 
+  KillMode=process 
+  LimitMEMLOCK=infinity 
+  LimitNOFILE=65535 
+  Type=simple 
 
-[Service] 
-WorkingDirectory=/path_to_user_directory 
-User=sonya-cummings 
-Type=idle 
-ExecStart=/path_to_user_directory/DataCollector/venv/bin/python3 /path_to_user_directory/DataCollector/app.py 
-Restart=on-failure 
-KillMode=process 
-LimitMEMLOCK=infinity 
-LimitNOFILE=65535 
-Type=simple 
-
-[Install] 
-WantedBy=multi-user.target
+  [Install] 
+  WantedBy=multi-user.target
 ```
 
 `sudo chmod 644 /lib/systemd/system/datacollector.service` \
@@ -84,7 +81,3 @@ WantedBy=multi-user.target
 `sudo systemctl start datacollector.service` \
 `sudo systemctl status datacollector.service` 
 
-
-
-
-    
