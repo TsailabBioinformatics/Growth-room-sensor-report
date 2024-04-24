@@ -26,5 +26,11 @@ These Python applications are designed for Raspberry Pi management, facilitating
 ### Installation
 
 #### Local Installation
+Clone the repository:
+```bash
+git clone https://github.com/your-lab/AGEseq
+cd AGEseq
+```
+
 
     
