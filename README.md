@@ -81,3 +81,60 @@ Paste below lines inside the file by making necessary changes
 `sudo systemctl start datacollector.service` \
 `sudo systemctl status datacollector.service` 
 
+
+# Daily Reporting App
+Constructed using Python's Streamlit package, this application displays daily observations collected by RPIs. It presents data regarding temperature, humidity, and brightness through graphs, along with images arranged in a grid format. The time range covered is segmented into 12AM-6AM, 6AM-12PM, 12PM-6PM, and 6PM-12AM.
+
+## Getting Started
+
+#### Local Installation
+Clone the repository Dail Reporting on lab's webserver
+```bash
+git clone []
+cd DailyReporting-App
+source venv/bin/activate
+python3 pip3 install -r requirement.txt
+```
+
+### Usage
+#### Command-Line Interface
+
+```
+streamlit run app.py
+```
+
+#### Service file
+Can be done for RPI datacollector and tracking IP address 
+`sudo nano /lib/systemd/system/dailyreport.service` \
+Paste below lines inside the file by making necessary changes 
+
+```
+  [Unit]
+
+Description=Daily Report Service
+After=multi-user.target
+
+
+[Service]
+WorkingDirectory=/data/Reporting-Project
+User=tsai-apps
+Type=idle
+ExecStart=/data/Reporting-Project/venv/bin/streamlit run /data/Reporting-Project/app.py --server.port 8089 --server.enableCORS=false --server.sslKeyFile /data/private-keys/private.key --server.sslCertFile /data/private-keys/localhost.crt
+Restart=on-failure
+KillMode=process
+LimitMEMLOCK=infinity
+LimitNOFILE=65535
+Type=simple
+
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+`sudo chmod 644 /lib/systemd/system/dailyreport.service` \
+`sudo systemctl enable dailyreport.service` \
+`sudo systemctl daemon-reload` \
+`sudo systemctl start dailyreport.service` \
+`sudo systemctl status dailyreport.service` 
+
