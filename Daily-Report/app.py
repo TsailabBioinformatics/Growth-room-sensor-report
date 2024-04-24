@@ -48,12 +48,10 @@ def buildChart(df,xAxis,yAxis,title):
     df["xAxis"] = pd.to_datetime(df["xAxis"])
     # Extract just the time part from "xAxis"
     df["xAxis"] = df["xAxis"].dt.strftime("%H:%M:%S")
-    #print("df---",df)
-    #xAxis = xAxis+":O"
     xAxis = xAxis
     #initialize chart object and add data
     chart = alt.Chart(df).mark_circle().encode(
-        #alt.X('utchoursminutes(xAxis):O', title='time of day'),
+        
         alt.X('xAxis', title='time of day'),
         alt.Y(yAxis, title='Value'),
         tooltip=[
@@ -89,20 +87,10 @@ def save_to_pdf(dataframes, images, pdf_file):
 
     for room, params in dataframes.items():
         for param, df in params.items():
-            print("----room----",room)
-            print("----param----",param)
-            print("---df----",df)
-            #with st.echo(code_location="below"):
-            #    st.write(df)
-    
             # Convert DataFrame to HTML table
             table_data = [df.columns.tolist()] + df.values.tolist()
             table = Table(table_data)
             story.append(table)
-
-    #for image in images:
-    #    story.append(Image(image))
-
     doc.build(story)
     return pdf_file.getvalue()
 
@@ -172,12 +160,7 @@ try:
                     options[i] = room.replace("#1", "")
                 if room == "":
                     del options[i]
-                    
-                    
-                
-                
-                    
-            #print("--options after--",options)        
+                      
                 
             selected_option = headerCol2.selectbox('Select Room', options)
             
