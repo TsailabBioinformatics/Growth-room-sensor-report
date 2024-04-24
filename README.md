@@ -83,7 +83,7 @@ Paste below lines inside the file by making necessary changes
 
 
 # Daily Reporting App
-Constructed using Python's Streamlit package, this application displays daily observations collected by RPIs. It presents data regarding temperature, humidity, and brightness through graphs, along with images arranged in a grid format. The time range covered is segmented into 12AM-6AM, 6AM-12PM, 12PM-6PM, and 6PM-12AM.
+Constructed using Python's Streamlit package, this application displays daily observations collected by RPIs. It presents data regarding temperature, humidity, and brightness through graphs, along with images arranged in a grid format. The time range covered is segmented into 12AM-6AM, 6AM-12PM, 12PM-6PM, and 6PM-12AM. If the above RPI is setup correctly you should be able to see the data.
 
 ## Getting Started
 
