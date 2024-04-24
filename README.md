@@ -41,5 +41,50 @@ python3 app.py
 
 ```
 
+### Usage
+#### Command-Line Interface
+To use TrackIPAddress from the command line:
+```
+python3 getIP.py
+```
+To use RPI3 or RPI0 Data collector from the command line:
+```
+python3 app.py
+```
+
+#### Service file
+For RPI3 or RPI0
+`sudo nano /lib/systemd/system/datacollector.service` \
+Paste below lines inside the file by making necessary changes 
+
+```
+[Unit] 
+Description=rpi3 
+After=multi-user.target 
+
+
+[Service] 
+WorkingDirectory=/path_to_user_directory 
+User=sonya-cummings 
+Type=idle 
+ExecStart=/path_to_user_directory/DataCollector/venv/bin/python3 /path_to_user_directory/DataCollector/app.py 
+Restart=on-failure 
+KillMode=process 
+LimitMEMLOCK=infinity 
+LimitNOFILE=65535 
+Type=simple 
+
+[Install] 
+WantedBy=multi-user.target
+```
+
+`sudo chmod 644 /lib/systemd/system/datacollector.service` \
+`sudo systemctl enable datacollector.service` \
+`sudo systemctl daemon-reload` \
+`sudo systemctl start datacollector.service` \
+`sudo systemctl status datacollector.service` 
+
+
+
 
     
