@@ -28,13 +28,13 @@ These Python applications are designed for Raspberry Pi management, facilitating
 #### Local Installation
 Clone the repository TrackIPAddress and RPI3 or RPI0 (based on the RPI type):
 ```bash
-git clone githublink
+git clone https://github.com/TsailabBioinformatics/RaspberryPis.git
 cd TrackIPAddress
 source venv/bin/activate
 python3 pip3 install -r requirement.txt
 python3 getIP.py
 
-cd RPI3
+cd RPI3 or cd RPI0
 source venv/bin/activate
 python3 pip3 install -r requirement.txt
 python3 app.py
