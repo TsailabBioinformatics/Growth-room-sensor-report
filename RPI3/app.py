@@ -85,10 +85,6 @@ def storeOnWebserver(data):
 
 def storeImage():
     try:
-        #initialize firebase object
-        #firebase = pyrebase.initialize_app(firebaseConfig)
-        #storage = firebase.storage()
-        #initialize camera object
         camera = PiCamera()
         #use now datetime as name of the Image
         now = datetime.now()
@@ -97,7 +93,6 @@ def storeImage():
         #capture image using the name
         camera.capture(name)
         #store image in the firebase
-        #storage.child("{}/{}".format(storageBucket,name)).put(name)
         #send the image to brightness() to get the brightness value
         brightness_value = brightness(name)
         
