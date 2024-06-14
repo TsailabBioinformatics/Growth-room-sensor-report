@@ -3,11 +3,6 @@
 This application is built using Python to store observations from the sensor like temperature, humidity, thermal, brightness, and images into firebase as well as the local database tables.
 
 ---
-### Note
-
-To make this script work [Database API on 172.30.18.104 server](https://github.com/TsailabBioinformatics/SensorsData) service needs to be active. 
-
----
 ### Necessary configuration to be set on the RPI before starting to use it
 - Issue the command ifconfig on cmd to get the IP address of the RPI
 - To SSH into the RPI enable the SSH config: Preferences -> Raspberry Pi Configuration -> Interfaces -> SSH: enable
