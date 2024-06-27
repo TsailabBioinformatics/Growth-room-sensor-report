@@ -82,72 +82,12 @@ Paste below lines inside the file by making necessary changes
 `sudo systemctl status datacollector.service` 
 
 
-# Daily Reporting App
-Constructed using Python's Streamlit package, this application displays daily observations collected by RPIs. It presents data regarding temperature, humidity, and brightness through graphs, along with images arranged in a grid format. The time range covered is segmented into 12AM-6AM, 6AM-12PM, 12PM-6PM, and 6PM-12AM. If the above RPI is setup correctly you should be able to see the data.
 
-## Getting Started
+## Data Receiver API
+Using Flask, this API receives data from RPis and store it in a SQLite database for the dashboard.
 
-#### Local Installation
-Clone the repository Dail Reporting on lab's webserver
-```bash
-git clone []
-cd DailyReporting-App
-source venv/bin/activate
-python3 pip3 install -r requirement.txt
-```
+### Installation
 
-### Usage
-#### Command-Line Interface
-
-```
-streamlit run app.py
-```
-
-#### Service file
-Can be done for RPI datacollector and tracking IP address 
-`sudo nano /lib/systemd/system/dailyreport.service` \
-Paste below lines inside the file by making necessary changes 
-
-```
-  [Unit]
-
-Description=Daily Report Service
-After=multi-user.target
-
-
-[Service]
-WorkingDirectory=/data/Reporting-Project
-User=tsai-apps
-Type=idle
-ExecStart=/data/Reporting-Project/venv/bin/streamlit run /data/Reporting-Project/app.py --server.port 8089 --server.enableCORS=false --server.sslKeyFile /data/private-keys/private.key --server.sslCertFile /data/private-keys/localhost.crt
-Restart=on-failure
-KillMode=process
-LimitMEMLOCK=infinity
-LimitNOFILE=65535
-Type=simple
-
-
-[Install]
-WantedBy=multi-user.target
-
-```
-
-`sudo chmod 644 /lib/systemd/system/dailyreport.service` \
-`sudo systemctl enable dailyreport.service` \
-`sudo systemctl daemon-reload` \
-`sudo systemctl start dailyreport.service` \
-`sudo systemctl status dailyreport.service` 
-
-
-
-# SensorsData
-Developed with Python's Flask package, this API is designed to capture data from RPIs and store it in a SQLite database. This data is then utilized by the 'Daily Reporting App' to present information on the website. Hosted on lab's webserver.
-
-
-## Getting Started
-
-#### Local Installation
-Clone the repository SensorsData on lab's webserver
 ```bash
 git clone []
 cd SensorsData-App
@@ -155,22 +95,8 @@ source venv/bin/activate
 python3 pip3 install -r requirement.txt
 ```
 
-### Usage
-#### Command-Line Interface
 
-```
-pyhton3 app.py
-```
-#### Service file
-`sudo nano /lib/systemd/system/SensorsData.service` \
-`sudo chmod 644 /lib/systemd/system/SensorsData.service` \
-`sudo systemctl enable SensorsData.service` \
-`sudo systemctl daemon-reload` \
-`sudo systemctl start SensorsData.service` \
-`sudo systemctl status SensorsData.service` 
-
-
-# RPI0-API
+## RPI0-API
 Constructed with Python's Flask package, this API is dedicated to storing data transmitted from RPI0 into a Firebase database. Due to the absence of Firebase package support in RPI0, this API serves as a workaround for data transmission. Hosted on lab's webserver.
 
 
@@ -185,18 +111,23 @@ source venv/bin/activate
 python3 pip3 install -r requirement.txt
 ```
 
+## Data Dashboard
+Using Streamlit, this dashboard displays temperature, humidity, and brightness through graphs, along with images arranged in a grid format.
+
+### Installation
+Clone the repository Dail Reporting on lab's webserver
+```bash
+git clone []
+cd DailyReporting-App
+source venv/bin/activate
+python3 pip3 install -r requirement.txt
+```
+
 ### Usage
-#### Command-Line Interface
 
 ```
-pyhton3 app.py
+streamlit run app.py
 ```
-#### Service file
-`sudo nano /lib/systemd/system/rpi0.service` \
-`sudo chmod 644 /lib/systemd/system/rpi0.service` \
-`sudo systemctl enable rpi0.service` \
-`sudo systemctl daemon-reload` \
-`sudo systemctl start rpi0.service` \
-`sudo systemctl status rpi0.service` 
+
 
 
