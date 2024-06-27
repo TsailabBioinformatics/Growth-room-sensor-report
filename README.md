@@ -1,11 +1,14 @@
-# RaspberryPis
+# Growth room monitoring project
+
+This project composed of 3 main parts, the setup of Raspberry Pis, server data receiving API, and the dashboard. 
+
+## Raspberry Pi setting
+
 These Python applications are designed for Raspberry Pi management, facilitating tasks ranging from IP address tracking to storing sensor data such as temperature, humidity, thermal readings, brightness levels, and images directly into the local database housed on the lab's server.
 
-## Features
+### Features
 - Dynamically track IP addresses due to their ever-changing nature and store them in Firebase.
 - Store sensor data efficiently.
-
-## Getting Started
 
 ### Prerequisites 
 - Retrieve the RPI's IP address by executing the "ifconfig" command in the command prompt.
@@ -25,10 +28,9 @@ These Python applications are designed for Raspberry Pi management, facilitating
 
 ### Installation
 
-#### Local Installation
 Clone the repository TrackIPAddress and RPI3 or RPI0 (based on the RPI type):
 ```bash
-git clone https://github.com/TsailabBioinformatics/RaspberryPis.git
+git clone []
 cd TrackIPAddress
 source venv/bin/activate
 python3 pip3 install -r requirement.txt
@@ -40,7 +42,7 @@ python3 pip3 install -r requirement.txt
 ```
 
 ### Usage
-#### Command-Line Interface
+
 To use TrackIPAddress from the command line:
 ```
 python3 getIP.py
@@ -49,39 +51,6 @@ To use RPI3 or RPI0 Data collector from the command line:
 ```
 python3 app.py
 ```
-
-#### Service file
-Can be done for RPI datacollector and tracking IP address 
-`sudo nano /lib/systemd/system/datacollector.service` \
-Paste below lines inside the file by making necessary changes 
-
-```
-  [Unit] 
-  Description=rpi3 
-  After=multi-user.target 
-
-  [Service] 
-  WorkingDirectory=/path_to_user_directory 
-  User=sonya-cummings 
-  Type=idle 
-  ExecStart=/path_to_user_directory/DataCollector/venv/bin/python3 /path_to_user_directory/DataCollector/app.py 
-  Restart=on-failure 
-  KillMode=process 
-  LimitMEMLOCK=infinity 
-  LimitNOFILE=65535 
-  Type=simple 
-
-  [Install] 
-  WantedBy=multi-user.target
-```
-
-`sudo chmod 644 /lib/systemd/system/datacollector.service` \
-`sudo systemctl enable datacollector.service` \
-`sudo systemctl daemon-reload` \
-`sudo systemctl start datacollector.service` \
-`sudo systemctl status datacollector.service` 
-
-
 
 ## Data Receiver API
 Using Flask, this API receives data from RPis and store it in a SQLite database for the dashboard.
